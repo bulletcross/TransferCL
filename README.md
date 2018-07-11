@@ -1,5 +1,7 @@
+# More instructions will be updated 
+
 TransferCL
-======== 
+========
 
 Table of Contents
 =================
@@ -57,8 +59,8 @@ For more information, please check these websites:
 
 ### 3. Installation
 
-There are two ways to install TranferCL: 
-1. From the source 
+There are two ways to install TranferCL:
+1. From the source
 	* This method enables the developer to build TranferCL for any particular mobile device architecture. We recommend this approach.
 2. Importing TranferCL from our prebuilt directory
 	* TransferCL has been pre-build for several commonly used hardware configurations. For these configurations, the shared-library can be imported directly in the Android application. However, we emphasize that once built, a shared-library is specific to a CPU ABI (armeabi-v7a, arm64-v8a ...) a GPU architecture (Adreno, Mali ...) and won't work for any other configurations than the one targeted initially.
@@ -67,19 +69,19 @@ There are two ways to install TranferCL:
 
 * In the folder ```prebuild library```, you can find the binary files (to include in your Android aplication) and the JavaWrapprer.
 * In this folder, this [file](prebuild%20library/README.md) includes more details about their utilization.
-	
+
 #### 3.2 Building from source: Native Library installation
 
 ##### 3.1.1 Pre-requisites
 
 * OpenCL compliant GPU, along with appropriate OpenCL driver:
     * The ```libOpenCL.so```, corresponding to the mobile device's GPU which is being targeting, need to to be placed in the folder ```extra_libs```.
-    * the headers files (*.h) need to be placed in the folder ```include``` 
-    
-* CrystaX NDK: 
+    * the headers files (*.h) need to be placed in the folder ```include```
+
+* CrystaX NDK:
     * [Google NDK](https://developer.android.com/ndk/index.html) provides a set of tools to build native applications on Android.  Our work is based on [CrystaX NDK](https://www.crystax.net/en), which has been developed as a drop-in replacement for Google NDK. For more information, please check their [website](https://www.crystax.net/en).
     * It is still possible to use Google NDK, however, the user will need the import ```Boost C++``` by himself.
-	
+
 ###### 3.1.1.1 Where to find the appropriated OpenCL shared-library
 
 As mentioned previously, the installation of TransferCL requires the compatible ```libOpenCL.so``` library and the corresponding OpenCL headers:
@@ -150,11 +152,11 @@ Your repository should look like that:
         * The images are processed by TransferCL and stored on the mobile device as a unique binary file.
         * Also create the folder architecture on your mobile device to store pre-build OpenCL kernel.
             * If these folders are not created, the application will crash.
-        * This method has to be the first to run.	
+        * This method has to be the first to run.
     * ```training(String path, String cmdTrain);```
-        * This method trains the new deep neural network. 
+        * This method trains the new deep neural network.
         * This method reuse the previously created files.
-        * This method also build the OpenCL kernel the system need to train the deep neural network. 
+        * This method also build the OpenCL kernel the system need to train the deep neural network.
         * The parameters of the training methods are given in 'transferCLinterface.cpp'
     * ```prediction(String path, String cmdPrediction)```
         * This method performs the inference task and store the result in a text file
@@ -168,17 +170,17 @@ Your repository should look like that:
 * A case study is in the folder ```case study```
 * In the folder ```study case```, you can find an application template using TranferCL.
 * You can also find a [tutorial](./case%20study/README.md).
-* The study case explores the following scenario:	
+* The study case explores the following scenario:
 	* Training on a server
 		1. We train a network (LeNet5) on the server with MNIST dataset (the training configuration is the standard one).
-		2. The final model is stored on the server in a binary file. 
+		2. The final model is stored on the server in a binary file.
 		3. This binary file is copied on the mobile device (for example, on the SD Card).
 	* Files preparations (```prepareFiles```)
 		1. We create the working directory ```directoryTest``` (perform at the native level by TransferCL)
 		2. The training files (the training file and their labels are respectively stored in one binary file) are generated.
 		3. TransferCL analyse the dataset, stores its mean/stdDev and store them in one file
 	* Training on the mobile device (```training```)
-		1. TransferCL creates a neural network, and initializes the weights of all layers except the last one with the weights of the pre-trained network. 
+		1. TransferCL creates a neural network, and initializes the weights of all layers except the last one with the weights of the pre-trained network.
 		2. The last layer is initialized with a random number generator.
 		3. The training starts: TransferCL train the final layer from scratch, while leaving all the others untouched.
 			1. TransferCL performs the forward propagation.
@@ -195,10 +197,10 @@ Your repository should look like that:
     * If the training dataset only contains images from a constraint environment (say, indoor), the classifier won't be able to score images accurately from a different environment (outdoor).
     * If the test images have widely different characteristics (illumination, background, color, size, position, etc), the classifier won't be able to perform very well.
     * If a test image contains entirely new concepts, the classifier won't be able to identify its class.
-    
+
 * The choice of the base model to transfer to the mobile device is very important. The two classification tasks (the one on the server and the one on the mobile device) should be related. For example, in our case study the base network has been trained to recognize handwritten digits and this knowledge is transferred to TransferCL in order to train a new network to classify handwritten characters on mobile devices.
 
-## 7. How to see the output 
+## 7. How to see the output
 
 * In order to see the ouput of TranferCL, you can use the [logcat command-line tool](https://developer.android.com/studio/command-line/logcat.html):
 	* ```>adb logcat ActivityManager:I TransferCL:D *:S```
@@ -218,9 +220,9 @@ I/TransferCL(10924): easyCL oject destroyed
 ```
 
 * For example, the output of ```training(String path, String cmdTrain);``` should look like that.
-	* After each iteration, TransferCL displays the loss value and the number of images' label correctly predicted. 
+	* After each iteration, TransferCL displays the loss value and the number of images' label correctly predicted.
 		* For example, ```loss=98.937355 numRight=118``` means that the loss is equal to 98.937355 and 118 images' label have been correctly predicted (we have only 128 images in the training dataset)
-		
+
 ```
 I/TransferCL(10924): ################################################
 I/TransferCL(10924): ###################Training#####################
@@ -479,6 +481,3 @@ Just create issues (in GitHub) in the top right of this page. Don't worry about 
 ## 9. Contribute
 
 If you are interestered in this project, feel free to contact me.
-
-
-
