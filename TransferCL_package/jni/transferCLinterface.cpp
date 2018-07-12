@@ -283,4 +283,3 @@ Java_com_transferCL_TransferCLlib_prepareFiles(JNIEnv* env, jclass clazz, jstrin
 
 	return 0;
 }
-

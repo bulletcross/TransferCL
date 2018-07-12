@@ -1,4 +1,4 @@
-# format=deepcl-jpeg-list-v1 planes=1 width=28 height=28
+# format=deepcl-jpeg-list-v1 N=128 planes=1 width=28 height=28
 /sdcard/character/mnist/1.jpg 2
 /sdcard/character/mnist/2.jpg 0
 /sdcard/character/mnist/3.jpg 9
